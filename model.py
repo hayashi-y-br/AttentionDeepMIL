@@ -144,8 +144,9 @@ class GatedAttention(nn.Module):
         return neg_log_likelihood, A
 
 class Additive(nn.Module):
-    def __init__(self):
+    def __init__(self, threshold=0.5):
         super(Additive, self).__init__()
+        self.threshold = threshold
         self.M = 500
         self.L = 128
         self.ATTENTION_BRANCHES = 1
@@ -193,7 +194,7 @@ class Additive(nn.Module):
 
         Y_prob = torch.mean(P, dim=1, keepdim=True)
         # Y_prob = torch.max(P, dim=1, keepdim=True).values
-        Y_hat = torch.ge(Y_prob, 0.5).float()
+        Y_hat = torch.ge(Y_prob, self.threshold).float()
 
         return Y_prob, Y_hat, P
 
