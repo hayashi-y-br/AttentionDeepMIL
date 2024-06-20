@@ -9,7 +9,7 @@ import torch.utils.data as data_utils
 from torch.autograd import Variable
 
 from dataloader import MnistBags
-from model import Attention, GatedAttention
+from model import Attention, GatedAttention, Additive
 
 # Training settings
 parser = argparse.ArgumentParser(description='PyTorch MNIST bags Example')
@@ -71,6 +71,9 @@ if args.model=='attention':
     model = Attention()
 elif args.model=='gated_attention':
     model = GatedAttention()
+elif args.model=='additive':
+    print("Additive MIL")
+    model = Additive()
 if args.cuda:
     model.cuda()
 
